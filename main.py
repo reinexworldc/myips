@@ -58,6 +58,21 @@ class IP:
         dst_bytes = socket.inet_aton(self.dst)
         ver_ihl = (self.version << 4) | self.ihl
         flags_frag = (self.flags << 13) | self.fragment_offset
+
+        header = struct.pack(
+            "!BBHHHBBH4s4s",
+            ver_ihl,
+            self.tos,
+            self.total_length,
+            self.identification,
+            flags_frag,
+            self.ttl,
+            self.protocol,
+            self.checksum,
+            src_bytes,
+            dst_bytes,
+        )
+        return header
     
     def send(self):
         pass
