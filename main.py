@@ -53,5 +53,11 @@ class IP:
             "dst",
         )
     
+    def _build_header(self):
+        src_bytes = socket.inet_aton(self.src)
+        dst_bytes = socket.inet_aton(self.dst)
+        ver_ihl = (self.version << 4) | self.ihl
+        flags_frag = (self.flags << 13) | self.fragment_offset
+    
     def send(self):
         pass
