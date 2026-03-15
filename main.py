@@ -74,5 +74,7 @@ class IP:
         )
         return header
     
-    def send(self):
-        pass
+    def send(self, payload: bytes = b"") -> None:
+        header = self._build_header()
+        packet = header + payload
+        self._socket.sendto(packet, (self.dst, 0))
