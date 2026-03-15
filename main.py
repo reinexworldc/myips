@@ -1,21 +1,57 @@
 import struct
+import socket
 
 class IP:
+    def __init__(
+        self,
+        version: int = 4,
+        ihl: int = 5,
+        tos: int = 0,
+        total_length: int = 0,
+        identification: int = 0,
+        flags: int = 0,
+        fragment_offset: int = 0,
+        ttl: int = 64,
+        protocol: int = 0,
+        checksum: int = 0,
+        src: str = "0.0.0.0",
+        dst: str = "0.0.0.0",
+    ):
+        self.version = version
+        self.ihl = ihl
+        self.tos = tos
+        self.total_length = total_length
+        self.identification = identification
+        self.flags = flags
+        self.fragment_offset = fragment_offset
+        self.ttl = ttl
+        self.protocol = protocol
+        self.checksum = checksum
+        self.src = src
+        self.dst = dst
+
+        self._socket = socket.socket(
+            socket.AF_INET, 
+            socket.SOCK_RAW, 
+            socket.IPPROTO_RAW
+        )
+
+    @staticmethod
+    def header_fields() -> tuple:
+        return (
+            "version",
+            "ihl",
+            "tos",
+            "total_length",
+            "identification",
+            "flags",
+            "fragment_offset",
+            "ttl",
+            "protocol",
+            "checksum",
+            "src",
+            "dst",
+        )
     
-    # Return the IP packet structure (RFC-791)
-    def header_format() -> dict[str, int | None]:
-        return {
-            "version": 4,
-            "ihl": 4,
-            "type_of_service": 8,
-            "total_length": 16,
-            "identification": 16,
-            "flags": 3,
-            "fragments_offset": 13,
-            "time_to_live": 8,
-            "protocol": 8,
-            "header_checksum": 16,
-            "source_address": 32,
-            "destination_address": 32,
-            "options": None,
-        }
+    def send(self):
+        pass
